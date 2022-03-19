@@ -31,7 +31,9 @@ app
     .use(router)
     .use(VueGoogleMaps, {
         load: {
-            key: 'AIzaSyDvyOF88aHMTHk4unuINCvxhqlfI1Fxje8',
+            key: 'AIzaSyChpJ846T9mPfT10rIcYFjTiGxvtGwjCsQ',
+            //
+            //AIzaSyDvyOF88aHMTHk4unuINCvxhqlfI1Fxje8
         },
     })
     .use(VueChartkick)
