@@ -1,13 +1,6 @@
 <template>
-  <div style="display:flex; justify-content:space-between; padding:20px 100px 20px 100px">
-    <div style="">
-      <img width="336" src="/cropped-ic-moe-logo.png">
-    </div>
-    <div style="">
-      <img width="336" src="/aqcs_logo.png">
-    </div>
-  </div>
-  <div style="width: 100vw; height: 60vh">
+  <header-page></header-page>
+  <div style="width: 100%; height: 60vh">
     <GMapMap
       map-type-id="terrain"
       style="width: 100%; height: relative"
@@ -49,9 +42,36 @@
       </GMapInfoWindow>
     </GMapMarker>
   </GMapMap>
+
+
   </div>
  
-    
+  <div class="index-container">
+          <div class="index-item">
+            <div class="label-item">ល្អណាស់</div>
+            <div class="color-item" style="background-color: blue;"></div>
+          </div>
+          <div class="index-item">
+            <div class="label-item">ល្អ</div>
+            <div class="color-item" style="background-color: green;"></div>
+          </div>
+          <div class="index-item">
+            <div class="label-item">ធម្យម(ការបំពុលកម្រិតស្រាល)</div>
+            <div class="color-item" style="background-color: yellow;"></div>  
+          </div> 
+          <div class="index-item">
+            <div class="label-item">បង្គួរ(ការបំពុលមធ្យម)</div>
+            <div class="color-item" style="background-color: orange;"></div>
+          </div>
+          <div class="index-item">
+            <div class="label-item">ខ្ពស់(ការបំពុលខ្លាំង)</div>
+            <div class="color-item" style="background-color: red;"></div>
+          </div>
+          <div class="index-item">
+            <div class="label-item">ខ្ពស់ខ្លាំង(ការបំពុលធ្ងន់ធ្ងរ)</div>
+            <div class="color-item" style="background-color: purple;"></div>
+          </div>
+  </div>
     <!-- <GoogleMap
     api-key="AIzaSyDvyOF88aHMTHk4unuINCvxhqlfI1Fxje8"
     style="width: 100%; height: 500px"
@@ -85,133 +105,100 @@
   </div>
 </div> -->
 <!-- <line-chart :data="{'2021-01-01': 11, '2021-01-03': 6, '2021-01-02': 5}" height="100px"></line-chart> -->
-<footer id="footer">
-        <div class="container" style="padding:10px 100px 10px 100px; color: #fff;">
-            <div class="row">
 
-                <div class="col-md-12 col-ms-12">
-                    <div class="widget-footer widget-footer-01">
-                        <h2 style="font-size: 15px;">ទំនាក់ទំនងក្រសួង</h2>
-                        <div style="font-size: 13px;">
-                            <ul style="list-style-type: none;">
-                                <li>
-                                    អគារមរតកតេជោ ដីឡូលេខ៥០៣ ផ្លូវកៅស៊ូអមមាត់ទន្លេបាសាក់<br>សង្កាត់ទន្លេបាសាក់ ខណ្ឌចំការមន រាជធានីភ្នំពេញ
-                                </li>
-                                <li>
-                                    (+855) 23 213 908<br>(+855) 23 220 369
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div style="text-align: center; font-size: 11px;">
-                        <p>&copy; ឆ្នាំ២០១៧ រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ៖ ក្រសួងបរិស្ថាន</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
+<footer-page></footer-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 export default defineComponent({
-  setup() {
-    const center = { lat: 12.562108, lng: 104.888535 }
-    return { center }
+  components: {
+    "header-page": Header,
+    "footer-page": Footer,
   },
-  data() {
-    return {
-      appjs: window.appjs,
-      livemap: JSON.parse(localStorage.getItem("livemap")),
-      location: JSON.parse(localStorage.getItem("location")),
-      livemap_byairtype:[],
-      openedMarkerID: null,
-    };
-  },
-  computed: {
-    getlang() {
-      return this.appjs.getlang();
-      //return this.$store.state.getlang;
+    setup() {
+        const center = { lat: 12.562108, lng: 104.888535 };
+        return { center };
     },
-    // livemap() {
-    //   return this.$store.state.livemap;
-    // },
-
-    df_airtype() {
-      return this.$store.state.df_airtype;
+    data() {
+        return {
+            appjs: window.appjs,
+            livemap: JSON.parse(localStorage.getItem("livemap")),
+            location: JSON.parse(localStorage.getItem("location")),
+            livemap_byairtype: [],
+            openedMarkerID: null,
+        };
     },
-
-  },
-  methods: {
-    openMarker(id) {
-       this.openedMarkerID = id
+    computed: {
+        getlang() {
+            return this.appjs.getlang();
+            //return this.$store.state.getlang;
+        },
+        // livemap() {
+        //   return this.$store.state.livemap;
+        // },
+        df_airtype() {
+            return this.$store.state.df_airtype;
+        },
     },
-    chooseMarker(status){
-      if(status==1){
-        return this.config.apiurl + '/resources/filelibrary/blue.png';
-      }
-      else if(status==2){
-        return this.config.apiurl + '/resources/filelibrary/green.png';
-      }
-      else if(status==3){
-        return this.config.apiurl + '/resources/filelibrary/yellow.png';
-      }
-      else if(status==4){
-        return this.config.apiurl + '/resources/filelibrary/orang.png';
-      }
-      else if(status==5){
-        return this.config.apiurl + '/resources/filelibrary/red.png';
-      }
-      else if(status==6){
-        return this.config.apiurl + '/resources/filelibrary/voilet.png';
-      }
-      else{
-        return this.config.apiurl + '/resources/filelibrary/voilet.png';
-      }
-      
-    }
-  },
-   mounted() {
-    //console.log(this.livemap);
-    if(this.livemap.length>0){
-      this.livemap_byairtype = [];
-      let that = this;
-      this.livemap.forEach(function (arrayItem) {
-        //console.log(arrayItem.result.status);
-        let latlong = arrayItem.latlong;
-        let position = {};
-        if(latlong.length>0){
-          let latlong_array = latlong.split(',');
-          position = {lat: parseFloat(latlong_array[0]), lng: parseFloat(latlong_array[1])};
+    methods: {
+        openMarker(id) {
+            this.openedMarkerID = id;
+        },
+        chooseMarker(status) {
+            if (status == 1) {
+                return this.config.apiurl + "/resources/filelibrary/blue.png";
+            }
+            else if (status == 2) {
+                return this.config.apiurl + "/resources/filelibrary/green.png";
+            }
+            else if (status == 3) {
+                return this.config.apiurl + "/resources/filelibrary/yellow.png";
+            }
+            else if (status == 4) {
+                return this.config.apiurl + "/resources/filelibrary/orang.png";
+            }
+            else if (status == 5) {
+                return this.config.apiurl + "/resources/filelibrary/red.png";
+            }
+            else if (status == 6) {
+                return this.config.apiurl + "/resources/filelibrary/voilet.png";
+            }
+            else {
+                return this.config.apiurl + "/resources/filelibrary/voilet.png";
+            }
         }
-        else{
-          position = {lat: 10.7433000, lng: 103.6200000};
+    },
+    mounted() {
+        //console.log(this.livemap);
+        if (this.livemap.length > 0) {
+            this.livemap_byairtype = [];
+            let that = this;
+            this.livemap.forEach(function (arrayItem) {
+                //console.log(arrayItem.result.status);
+                let latlong = arrayItem.latlong;
+                let position = {};
+                if (latlong.length > 0) {
+                    let latlong_array = latlong.split(",");
+                    position = { lat: parseFloat(latlong_array[0]), lng: parseFloat(latlong_array[1]) };
+                }
+                else {
+                    position = { lat: 10.7433, lng: 103.62 };
+                }
+                that.livemap_byairtype.push({
+                    location_id: arrayItem.location_id,
+                    title: arrayItem.title,
+                    code: arrayItem.code,
+                    avg_qty: 0,
+                    position,
+                    result: arrayItem.result
+                });
+            });
         }
-
-        that.livemap_byairtype.push({
-          location_id: arrayItem.location_id,
-          title : arrayItem.title,
-          code : arrayItem.code,
-          avg_qty: 0,
-          position,
-          result: arrayItem.result
-        });
-
-
-      });
-
-    }
-    
-    
-  },
+    },
+  
 })
 
 
@@ -224,7 +211,28 @@ export default defineComponent({
 .vue-map-container{
   height: 100%;
 }
- #footer {
-            background-color: #077f36;
-        }
+
+.index-container {
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+  margin: 10px 0px;
+}
+
+.index-item {
+  display: flex;
+  flex-direction: column;
+  color: black;
+  text-align: center;
+  flex-grow:1;
+}
+
+.label-item {
+  flex-grow:1;
+  font-size: 14px;
+}
+.color-item {
+  flex-grow:0;
+  height: 5px;
+}
 </style>
